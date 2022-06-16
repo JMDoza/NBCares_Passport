@@ -5,10 +5,16 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 
 import { PageContext } from "../context";
-import { TouchableOpacity, Modal, View, StyleSheet,Pressable, Text } from "react-native";
-import InfoText from "../InfoText.js";
+import {
+  TouchableOpacity,
+  Modal,
+  View,
+  StyleSheet,
+  Pressable,
+  Text,
+} from "react-native";
+import {InfoText} from "../InfoText.js";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
 
 const Stack = createNativeStackNavigator();
 
@@ -51,7 +57,6 @@ const Navigation = ({ navigation }) => {
                   setModalVisible(!modalVisible);
                 }}
               >
-                
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
                     <Text style={styles.modalText}>{InfoText}</Text>

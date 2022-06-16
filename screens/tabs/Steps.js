@@ -126,6 +126,36 @@ const Steps = ({ route, navigation }) => {
     );
   };
 
+  const Step = ({ item }) => {
+    return (
+      <View style={styles.taskContainer}>
+        <TouchableOpacity onPress={() => toggleCompleted(item)}>
+          <Ionicons
+            name={item.complete ? "ios-checkbox-outline" : "ios-square"}
+            size={24}
+            color={item.complete ? "#e3e3e3" : "#ffffff"}
+            style={{ width: 40 }}
+          />
+        </TouchableOpacity>
+        <View>
+          <Text style={{ color: item.complete ? "#e3e3e3" : "#ffffff" }}>
+            {item.title}
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={[
+                styles.taskSubText,
+                { color: item.complete ? "#e3e3e3" : "#e8e8e8" },
+              ]}
+            >
+              Type: {item.type}
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <GestureHandlerRootView
       style={{ flex: 1, justifyContent: "center", backgroundColor: "#c6b886" }}
@@ -133,7 +163,7 @@ const Steps = ({ route, navigation }) => {
       <LinearGradient
         // Background Linear Gradient
         colors={["#d0c49a", "#ffffff"]}
-        locations={[0.5,1]}
+        locations={[0.5, 1]}
         end={{ x: 0, y: 1 }}
         style={styles.background}
       />
@@ -217,38 +247,24 @@ const Steps = ({ route, navigation }) => {
       <FlatList
         data={task.steps}
         keyExtractor={(item, index) => index}
-        contentContainerStyle={{ paddingHorizontal: 45, marginTop: 15, paddingBottom: 250 }}
-        renderItem={({ item, index }) => (
-          <Swipeable
-            renderRightActions={(_, dragX) => rightActions(dragX, index)}
-          >
-            <View style={styles.taskContainer}>
-              <TouchableOpacity onPress={() => toggleCompleted(item)}>
-                <Ionicons
-                  name={item.complete ? "ios-checkbox-outline" : "ios-square"}
-                  size={24}
-                  color={item.complete ? "#e3e3e3" : "#ffffff"}
-                  style={{ width: 40 }}
-                />
-              </TouchableOpacity>
-              <View>
-                <Text style={{ color: item.complete ? "#e3e3e3" : "#ffffff" }}>
-                  {item.title}
-                </Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={[
-                      styles.taskSubText,
-                      { color: item.complete ? "#e3e3e3" : "#e8e8e8" },
-                    ]}
-                  >
-                    Type: {item.type}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </Swipeable>
-        )}
+        contentContainerStyle={{
+          paddingHorizontal: 45,
+          marginTop: 15,
+          paddingBottom: 250,
+        }}
+        renderItem={({ item, index }) => {
+          if (item.type == "system") {
+            return <Step item={item} />;
+          } else {
+            return (
+              <Swipeable
+                renderRightActions={(_, dragX) => rightActions(dragX, index)}
+              >
+                <Step item={item} />
+              </Swipeable>
+            );
+          }
+        }}
       />
 
       <View style={[styles.section, styles.footer]}>

@@ -2,11 +2,9 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
+  Modal,
+  Pressable,
   ActivityIndicator,
-  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
@@ -14,19 +12,16 @@ import { PageContext } from "../context";
 import Reports from "../components/Reports";
 import FloatingButtonf from "../components/FloatingButtonf";
 import { LinearGradient } from "expo-linear-gradient";
+import {ReportingText} from "../InfoText.js";
 
 let initialRender = true;
 const HomeScreen = () => {
   // These variables can be considered 'global' to any file that is under the context provider in the root file
-  const { fire, authen, lists, refreshs, vitals, pointss, headers } =
-    React.useContext(PageContext);
+  const { fire, authen, lists } = React.useContext(PageContext);
   const [authID, setAuthID] = authen;
-  const [refresh, setRefresh] = refreshs;
-  const [vitalsigns, setVitalsigns] = vitals;
-  const [points, setPoints] = pointss;
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(true);
   const navigation = useNavigation();
-  const [header, setHeader] = headers;
 
   // Sets the authID useState to the user ID from firebase, this then allows the useEffect in App.js to trigger
   // and retieve the lists and user points
@@ -66,10 +61,31 @@ const HomeScreen = () => {
   // these functions is to toggle the center button. it will be the animation
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{ReportingText}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>I Understand</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <LinearGradient
         // Background Linear Gradient
         colors={["#d0c49a", "#ffffff"]}
-        locations={[0.5,1]}
+        locations={[0.5, 1]}
         end={{ x: 0, y: 1 }}
         style={styles.background}
       />
@@ -93,5 +109,38 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 200,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonClose: {
+    backgroundColor: "#af272f",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
