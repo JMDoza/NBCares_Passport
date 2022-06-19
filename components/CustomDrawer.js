@@ -58,16 +58,26 @@ const CustomDrawer = (props) => {
           >
             {name}
           </Text>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "column" }}>
             <Text
               style={{
                 color: "#fff",
                 marginRight: 5,
-              }}
-            >
-              {"You earned " + points + " points!"}
+                fontSize: 18,
+                bottom: 20
+              }}>
+              {"Your self-sufficiency score is"}
             </Text>
-            <FontAwesome5 name="coins" size={14} color="#fff" />
+            <Text
+              style={{
+                color: "#fff",
+                marginRight: 5,
+                fontSize: 50,
+                bottom: 9,
+                textAlign: "center",
+              }}>
+              {points + "!"}
+            </Text>
           </View>
         </ImageBackground>
         <View style={{ flex: 1, backgroundColor: "#fff", paddingTop: 10 }}>
@@ -76,6 +86,25 @@ const CustomDrawer = (props) => {
       </DrawerContentScrollView>
 
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
+      <TouchableOpacity
+          onPress={() =>
+            Linking.openURL("https://youtu.be/fMRXHfrs3y8")
+          }
+          style={{ paddingVertical: 15 }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons name="logo-youtube" size={22} />
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 5,
+              }}
+            >
+              Tutorial
+            </Text>
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity
           onPress={() =>
             Linking.openURL("https://jmkryzanski.pythonanywhere.com")
