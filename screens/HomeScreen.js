@@ -17,11 +17,15 @@ import {ReportingText} from "../InfoText.js";
 let initialRender = true;
 const HomeScreen = () => {
   // These variables can be considered 'global' to any file that is under the context provider in the root file
-  const { fire, authen, lists } = React.useContext(PageContext);
+  const { fire, authen, lists, newUsers } = React.useContext(PageContext);
   const [authID, setAuthID] = authen;
+  const [newUser, setNewUser] = newUsers;
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(true);
   const navigation = useNavigation();
+
+  console.log("New: ", newUser)
+  console.log("Visible: ", modalVisible)
 
   // Sets the authID useState to the user ID from firebase, this then allows the useEffect in App.js to trigger
   // and retieve the lists and user points
@@ -36,6 +40,7 @@ const HomeScreen = () => {
       initialRender = false;
     } else {
       setLoading(false);
+      setModalVisible(newUser)
     }
   }, [lists]);
 
@@ -75,7 +80,12 @@ const HomeScreen = () => {
             <Text style={styles.modalText}>{ReportingText}</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {
+                setModalVisible(!modalVisible)
+                fire.updateUser({
+                  newUser: false
+                })
+              }}
             >
               <Text style={styles.textStyle}>I Understand</Text>
             </Pressable>

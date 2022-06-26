@@ -3,14 +3,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Navigation } from "./Navigation";
 
-import { Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: "black", //Change when there are more bottom tabs to navigate
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={Navigation}
@@ -21,7 +24,7 @@ const TabNavigator = () => {
               name={"home-sharp"}
               size={25}
               color={"black"}
-              style={{ justifyContent: "center", alignItems:"center" }}
+              style={{ justifyContent: "center", alignItems: "center" }}
             />
           ),
         }}
