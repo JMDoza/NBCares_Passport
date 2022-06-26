@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { PageContext } from "../../context";
-import { Smiley } from "../../components/Smiley";
 
 
 //it seemed like a good idea at the time...

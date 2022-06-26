@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from "react";
-import {  StyleSheet, } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { Fire } from "./firebase";
 import { PageContext } from "./context";
 import "react-native-gesture-handler";
 import { LoginStack } from "./navigation/LoginStack";
 
-
-
-
 const fire = new Fire();
 
 let initialRender = true;
 export default function App() {
-
   const [authID, setAuthID] = useState("");
   const [lists, setLists] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [vitalsigns, setVitalsigns] = useState([]);
   const [points, setPoints] = useState(0);
   const [count, setCount] = useState(0);
+  const [newUser, setNewUser] = useState(true);
   const [header, setHeader] = useState("");
   const [name, setName] = useState("");
 
@@ -51,9 +48,8 @@ export default function App() {
       fire.refUser.get().then((doc) => {
         setPoints(doc.data().userPoints);
         setCount(doc.data().counter);
+        setNewUser(doc.data().newUser);
       });
-
-
 
       // Unsubscribes to the lists listener
       return fire.detach();
@@ -74,15 +70,15 @@ export default function App() {
         vitals: [vitalsigns, setVitalsigns],
         pointss: [points, setPoints],
         counter: [count, setCount],
+        newUsers: [newUser, setNewUser],
         headers: [header, setHeader],
       }}
     >
       {/* <StatusBar barStyle="dark-content" /> */}
       <NavigationContainer>
-        <LoginStack/>
+        <LoginStack />
       </NavigationContainer>
     </PageContext.Provider>
-
   );
 }
 
@@ -95,10 +91,10 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   background: {
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     right: 0,
     top: 0,
