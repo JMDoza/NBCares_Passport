@@ -52,7 +52,7 @@ const CustomDrawer = (props) => {
           <Text
             style={{
               color: "#fff",
-              fontSize: 18,
+              fontSize: 28,
               marginBottom: 5,
             }}
           >
@@ -64,7 +64,6 @@ const CustomDrawer = (props) => {
                 color: "#fff",
                 marginRight: 5,
                 fontSize: 18,
-                bottom: 20
               }}>
               {"Your self-sufficiency score is"}
             </Text>

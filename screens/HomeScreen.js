@@ -24,8 +24,9 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(true);
   const navigation = useNavigation();
 
-  console.log("New: ", newUser)
-  console.log("Visible: ", modalVisible)
+  // console.log("==============================")
+  // console.log("New: ", newUser)
+  // console.log("Visible: ", modalVisible)
 
   // Sets the authID useState to the user ID from firebase, this then allows the useEffect in App.js to trigger
   // and retieve the lists and user points
