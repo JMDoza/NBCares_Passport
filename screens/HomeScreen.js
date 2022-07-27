@@ -21,11 +21,11 @@ const HomeScreen = () => {
   const [authID, setAuthID] = authen;
   const [newUser, setNewUser] = newUsers;
   const [loading, setLoading] = useState(true);
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
   // console.log("==============================")
-  // console.log("New: ", newUser)
+  // console.log("New User: ", newUser)
   // console.log("Visible: ", modalVisible)
 
   // Sets the authID useState to the user ID from firebase, this then allows the useEffect in App.js to trigger
@@ -33,6 +33,12 @@ const HomeScreen = () => {
   useEffect(() => {
     setAuthID(fire.userID);
   }, []);
+
+  useEffect(() => {
+    fire.refUser.get().then((doc) => {
+      setNewUser(doc.data().newUser);
+    });
+  }, [modalVisible]);
 
   // This useEffect triggers when the useState 'lists' changes, when it changes the loading state to false
   // so that the activity indicator is disabled and shows the content of the screen when loaded

@@ -70,6 +70,11 @@ const TaskList = ({ task, index, listID }) => {
     });
     item.complete = true;
     item.completed = true;
+    item.date = new Date();
+    
+    console.log(new Date())
+    console.log(fire.timeStamp)
+
     fire.updateList(list);
   };
 
@@ -163,17 +168,16 @@ const TaskList = ({ task, index, listID }) => {
             </Text>
 
             <View style={{ flexDirection: "row" }}>
+              <Text
+                style={[
+                  styles.taskSubText,
+                  { color: task.complete ? "#969696" : "#e8e8e8" },
+                ]}
+              >
+                Type: {task.type}
+              </Text>
               {task.steps.length > 0 ? (
                 <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={[
-                      styles.taskSubText,
-                      { color: task.complete ? "#969696" : "#e8e8e8" },
-                    ]}
-                  >
-                    {task.steps.filter((step) => step.complete).length} of{" "}
-                    {task.steps.length}
-                  </Text>
                   <Text
                     style={[
                       styles.taskSubText,
@@ -185,17 +189,43 @@ const TaskList = ({ task, index, listID }) => {
                   >
                     ||
                   </Text>
+                  <Text
+                    style={[
+                      styles.taskSubText,
+                      { color: task.complete ? "#969696" : "#e8e8e8" },
+                    ]}
+                  >
+                    {task.steps.filter((step) => step.complete).length} of{" "}
+                    {task.steps.length}
+                  </Text>
+
+                  
                 </View>
               ) : null}
 
-              <Text
-                style={[
-                  styles.taskSubText,
-                  { color: task.complete ? "#969696" : "#e8e8e8" },
-                ]}
-              >
-                Type: {task.type}
-              </Text>
+              {task.complete ? (
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={[
+                      styles.taskSubText,
+                      {
+                        paddingHorizontal: 10,
+                        color: task.complete ? "#969696" : "#e8e8e8",
+                      },
+                    ]}
+                  >
+                    ||
+                  </Text>
+                  <Text
+                    style={[
+                      styles.taskSubText,
+                      { color: task.complete ? "#969696" : "#e8e8e8" },
+                    ]}
+                  >
+                    {new Date(task.date.toDate()).toDateString()}
+                  </Text>
+                </View>
+              ) : null}
             </View>
           </View>
         </TouchableOpacity>
