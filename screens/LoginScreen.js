@@ -29,6 +29,9 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = fire.auth.onAuthStateChanged((user) => {
       if (user) {
+        fire.updateUser({
+          lastLogin: fire.timeStamp,
+        })
         navigation.replace("Home");
       }
     });

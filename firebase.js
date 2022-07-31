@@ -120,6 +120,7 @@ class Fire extends React.Component {
       userPoints: 0,
       counter: 0,
       newUser: true,
+      lastLogin: this.timeStamp,
     });
 
     // Takes the data from tempData.js and adds it into the database

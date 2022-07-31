@@ -50,7 +50,21 @@ const TaskList = ({ task, index, listID }) => {
             {
               text: "OK",
               onPress: () => {
-                add_completeTask(item);
+                fire.refUser.get().then((doc) => {
+                  if (
+                    new Date().getTime() >
+                    new Date(doc.data().lastLogin.toDate()).getTime()
+                  ) {
+                    add_completeTask(item);
+                  } else {
+                    Alert.alert("ERROR:", "System Date & Time is not synced with server, could not complete task.", [
+                      {
+                        text: "OK",
+                        onPress: () => {},
+                      },
+                    ]);
+                  }
+                });
               },
             },
           ]
@@ -71,9 +85,22 @@ const TaskList = ({ task, index, listID }) => {
     item.complete = true;
     item.completed = true;
     item.date = new Date();
-    
-    console.log(new Date())
-    console.log(fire.timeStamp)
+
+    var test1 = new Date();
+
+    var test2 = null;
+
+    // fire.refUser.get().then((doc) => {
+    //   test2 = new Date(doc.data().lastLogin.toDate())
+    //   console.log("dafasdf ", new Date(doc.data().lastLogin.toDate()).getTime())
+    //   // if (test1.getTime() > test2.getTime()) {
+    //   //   console.log("TREUUUUUUUUUUUU")
+    //   // } else {{
+    //   //   console.log("FLASSEE")
+    //   // }}
+    // });
+
+    // console.log(new Date().getTime())
 
     fire.updateList(list);
   };
@@ -198,8 +225,6 @@ const TaskList = ({ task, index, listID }) => {
                     {task.steps.filter((step) => step.complete).length} of{" "}
                     {task.steps.length}
                   </Text>
-
-                  
                 </View>
               ) : null}
 
