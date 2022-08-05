@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
+import PasswordValidator from "../../components/PasswordValidator"
 
 const Progress = () => {
   const [show, setShow] = useState(true);
@@ -40,7 +41,7 @@ const Progress = () => {
 
   return (
     <View style={styles.container}>
-      <Animated.View
+      {/* <Animated.View
         style={[
           styles.box,
           {
@@ -69,7 +70,8 @@ const Progress = () => {
         <View style={styles.button}>
           <Text style={styles.buttonText}>Press me!</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <PasswordValidator />
     </View>
   );
 };
