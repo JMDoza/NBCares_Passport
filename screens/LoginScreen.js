@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { PageContext } from "../context";
-import {LogBox} from 'react-native';
+import { LogBox } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 
 
@@ -29,9 +29,6 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = fire.auth.onAuthStateChanged((user) => {
       if (user) {
-        fire.updateUser({
-          lastLogin: fire.timeStamp,
-        })
         navigation.replace("Home");
       }
     });
@@ -63,19 +60,19 @@ const LoginScreen = () => {
     >
       <LinearGradient
         // Background Linear Gradient
-        colors={["#af272f", "#ffffff"]}
-        end={{ x: 0, y: 1 }}
+        colors={["#800000", "#fc3d5d"]}
+        end={{ x: 0, y: .7 }}
         style={styles.background}
       />
       <Image
         style={{
           width: "75%",
-          height: 175,
-          resizeMode: "stretch",
+          height: 250,
+          resizeMode: "contain",
           marginBottom: 15,
+          marginTop: 130,
         }}
-        source={require("../assets/nbcares_gold.png")}
-        tintColor='#af272f'
+        source={require("../assets/nbcares_gold_blackoutline.png")}
       />
 
       <View style={styles.inputContainer}>
@@ -188,12 +185,12 @@ const styles = StyleSheet.create({
   },
   buttonRgst: {
     marginTop: 75,
-    width: "81%",
     padding: 1,
-    alignItems: "flex-end",
     fontWeight: "700",
     fontSize: 16,
     bottom: 1,
+    justifyContent: "center",
+    color: "#c5b783",
   },
 
   buttonFrgt: {
@@ -211,12 +208,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonOutlineText_Frgt: {
-    color: "#af272f",
+    color: "#c5b783",
     fontWeight: "700",
     fontSize: 12,
   },
   buttonOutlineText_Rgst: {
-    color: "#af272f",
+    color: "#c5b783",
     fontWeight: "700",
     fontSize: 10,
     bottom: 1,
