@@ -29,8 +29,37 @@ const SignUpScreen = () => {
 
   const navigation = useNavigation();
 
+  const [errorFlag, setErrorFlag] = useState(0);
+
+  function validate_password(password) {
+    let check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})(?=.*[!@#\$%\^&\*])/;
+    let checkCaps = /(?=.*[A-Z])/;
+    let checkNum = /(?=.*[0-9])/;
+    let checkSym = /(?=.*[!@#\$%\^&\*])/;
+    if (password.match(check)) {
+       setErrorFlag(0);
+    }
+    else if (password.length < 8) {
+      setErrorFlag(1);
+      alert("Your password needs at least 8 characters")
+    }
+    else if (!password.match(checkCaps)) {
+      setErrorFlag(1);
+      alert("Your password needs at least 1 capital letter")
+    }
+    else if (!password.match(checkNum)) {
+      setErrorFlag(1);
+      alert("Your password needs at least 1 number")
+    }
+    else if (!password.match(checkSym)) {
+      setErrorFlag(1);
+      alert("Your password needs at least 1 symbol")
+    }
+  }
 
   const handleSignUp = () => {
+    validate_password(password);
+    if (errorFlag == 0) {
     fire.auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
@@ -39,6 +68,7 @@ const SignUpScreen = () => {
         fire.addUser(user.uid, user.email);
       })
       .catch((error) => alert(error.message));
+    }
   };
   return (
     <View style = {styles.container}>
@@ -50,7 +80,7 @@ const SignUpScreen = () => {
     <Text style = {styles.text_footer}>Name</Text>
     <View style={styles.action}>
     <TextInput
-            
+            style={styles.input}
             onChangeText={setName}
             value={name}
             placeholder="Enter your first and last name"
@@ -79,10 +109,17 @@ const SignUpScreen = () => {
         />
   </View>
 
+  <Text>Password Must Have
+  {'\n'}  - 8 characters minimum
+  {'\n'}  - At least one upper case letter
+  {'\n'}  - At least one number
+  {'\n'}  - At least one symbol
+  </Text>
 
         <TouchableOpacity onPress={handleSignUp} style={[styles.button, styles.buttonOutline]}>
           <Text style={styles.buttonText}>Register & Login</Text>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
               <Modal
                 animationType="slide"
@@ -111,15 +148,8 @@ const SignUpScreen = () => {
               </Modal>
              
             <Text style = {styles.termsClick}>By registering, you are agreeing to authorize information.</Text></TouchableOpacity>
- 
-  
     </View>
-
-   
-    
   </View>
-
- 
   );
 };
 
@@ -134,28 +164,26 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'flex-end',
       paddingHorizontal: 20,
-      paddingBottom: 50
+      paddingTop: 0,
   },
   footer: {
       flex: 3,
       backgroundColor: '#fff',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
-      paddingHorizontal: 20,
+      paddingHorizontal: 25,
       paddingVertical: 30
   },
-
   text_header: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 30
+    fontSize: 30,
+    bottom: 50,
 },
-
 text_footer: {
   color: '#05375a',
   fontSize: 18
 },
-
 action: {
   flexDirection: 'row',
   marginTop: 10,
@@ -163,7 +191,6 @@ action: {
   borderBottomColor: '#f2f2f2',
   paddingBottom: 9,
   paddingTop:2
-
 },
   inputContainer: {
     width: "80%",
@@ -172,7 +199,7 @@ action: {
   input: {
     backgroundColor: "white",
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: 5,
     borderRadius: 10,
     marginTop: 5,
   },
@@ -189,7 +216,7 @@ action: {
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    top: 100
+    top: 50
   },
   buttonOutline: {
     backgroundColor: "white",
@@ -198,12 +225,9 @@ action: {
     borderWidth: 2,
   },
   buttonText: {
-  
-  
     color: "#af272f",
     fontWeight: "700",
     fontSize: 16,
-  
   },
   buttonOutlineText: {
     color: "#af272f",
@@ -239,7 +263,6 @@ action: {
     padding: 10,
     elevation: 2,
   },
-
   buttonClose: {
     backgroundColor: "#af272f",
   },
@@ -254,7 +277,10 @@ action: {
     fontSize:8,
   },
   termsClick: {
-    color: "dodgerblue"
+    color: "dodgerblue",
+    justifyContent: "center",
+    textAlign: "center",
+    bottom: 35,
   }
 });
 
