@@ -106,6 +106,25 @@ const CustomDrawer = (props) => {
 
         <TouchableOpacity
           onPress={() =>
+            Linking.openURL("https://docs.google.com/viewer?url=https://docs.google.com/document/d/1uhp2kQOpiaEjm7WYq8GXYY2ddSbiQC06dM0YQ6qDMfE/export?format=pdf")
+          }
+          style={{ paddingVertical: 15 }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons name="newspaper-outline" size={22} />
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 5,
+              }}
+            >
+              User Manual
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() =>
             Linking.openURL("https://jmkryzanski.pythonanywhere.com")
           }
           style={{ paddingVertical: 15 }}
