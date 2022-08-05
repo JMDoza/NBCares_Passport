@@ -5,6 +5,7 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import VitalScreen from "../screens/tabs/vital";
+import ProgressScreen from "../screens/tabs/Progress";
 import ZoomScreen from "../screens/ZoomMeetingLink";
 
 import { TabNavigator } from "./TabNavigator";
@@ -49,6 +50,15 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="Zoom Meeting"
         component={ZoomScreen}
+        options={{
+          drawerIcon: ({ color }) => (
+            <Ionicons name="videocam-outline" size={22} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Playground"
+        component={ProgressScreen}
         options={{
           drawerIcon: ({ color }) => (
             <Ionicons name="videocam-outline" size={22} color={color} />
