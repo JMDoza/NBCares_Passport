@@ -18,7 +18,8 @@ import { LinearGradient } from "expo-linear-gradient";
 
 
 const LoginScreen = () => {
-  LogBox.ignoreLogs(['Warning: Async Storage has been extracted from react-native core']);
+  LogBox.ignoreLogs(['Async Storage has been extracted']);
+  LogBox.ignoreLogs(['Setting a timer for a long period of time']);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
