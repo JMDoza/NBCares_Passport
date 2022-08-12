@@ -37,9 +37,13 @@ const TaskList = ({ task, index, listID }) => {
     }
 
     if (!item.complete && !item.completed) {
-      if (item.type == "system") {
+      console.log(item.locked)
+      if(item.locked) {
+        Alert.alert("Wait!", "You cannot complete this task yet");
+      }
+      else if (item.type == "system") {
         Alert.alert(
-          "Complete [" + item.title + "]",
+          "Complete: " + [item.title] + "?",
           "You will not be able to uncomplete this task",
           [
             {
@@ -55,6 +59,7 @@ const TaskList = ({ task, index, listID }) => {
                     new Date().getTime() >
                     new Date(doc.data().lastLogin.toDate()).getTime()
                   ) {
+                    list.next().locked = false;
                     add_completeTask(item);
                   } else {
                     Alert.alert("ERROR:", "System Date & Time is not synced with server, could not complete task.", [

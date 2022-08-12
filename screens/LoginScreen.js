@@ -18,7 +18,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 
 const LoginScreen = () => {
-  LogBox.ignoreLogs(['Async Storage has been extracted']);
+  LogBox.ignoreLogs(['AsyncStorage has been extracted']);
   LogBox.ignoreLogs(['Setting a timer for a long period of time']);
 
   const [email, setEmail] = useState("");
