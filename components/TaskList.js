@@ -10,18 +10,36 @@ import React, { useState, useEffect } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 import { Swipeable } from "react-native-gesture-handler";
-import { PageContext } from "../context";
+import { PageContext, PageContext2 } from "../context";
 import { useNavigation } from "@react-navigation/native";
 
-const TaskList = ({ task, index, listID }) => {
+
+const TaskList = ({ task, index, listID, drag, isActive }) => {
   // showList displays Modal if set to true
   // refresh updatees the TaskList if a value in its array changes
   const { fire, lists, pointss, refreshs } = React.useContext(PageContext);
+  const { listTest } = React.useContext(PageContext2);
   const [refresh, setRefresh] = refreshs;
   const [points, setPoints] = pointss;
-  const list = lists[listID];
+  // const list = lists[listID];
+  const [list, setList] = listTest
 
   const navigation = useNavigation();
+  // const renderItem = ({ item, drag, isActive }: RenderItemParams<Item>) => {
+  //   return (
+  //     <TouchableOpacity
+  //       activeOpacity={1}
+  //       onLongPress={drag}
+  //       disabled={isActive}
+  //       style={[
+  //         styles.rowItem,
+  //         { backgroundColor: isActive ? "red" : item.backgroundColor },
+  //       ]}
+  //     >
+  //       <Text style={styles.text}>{item.text}</Text>
+  //     </TouchableOpacity>
+  // );
+  // }
 
   useEffect(() => {
     navigation.setOptions({
@@ -31,6 +49,7 @@ const TaskList = ({ task, index, listID }) => {
 
   // This toggles the Completed Boolean of the array item then updates the TaskList
   const toggleCompleted = (item) => {
+    // console.log("TOGGLED UPDATED \n")
     if (item.completed && item.type != "system") {
       item.complete = !item.complete;
       fire.updateList(list);
@@ -91,9 +110,13 @@ const TaskList = ({ task, index, listID }) => {
     item.completed = true;
     item.date = new Date();
 
+
+
     var test1 = new Date();
 
     var test2 = null;
+
+    console.log("TESTING DATES ", new Date(test1).toDateString())
 
     // fire.refUser.get().then((doc) => {
     //   test2 = new Date(doc.data().lastLogin.toDate())
@@ -136,7 +159,8 @@ const TaskList = ({ task, index, listID }) => {
     });
 
     return (
-      <TouchableOpacity onPress={() => deleteTask(index)}>
+      <TouchableOpacity 
+        onPress={() => deleteTask(index)}>
         <Animated.View
           style={[
             styles.deleteButton,
@@ -162,19 +186,24 @@ const TaskList = ({ task, index, listID }) => {
   };
 
   const Task = () => {
+    console.log("SHOWING TASK: ", task.date)
     return (
       <View>
         <TouchableOpacity
           style={[
             styles.taskContainer,
-            { backgroundColor: task.complete ? "#ded6ba" : "#c6b886" },
+            { backgroundColor: isActive ? "red" : "#c6b886" },
+            { backgroundColor: task.complete ? "#ded6ba" : "#c6b886" }, 
+            
           ]}
+          onLongPress={task.type == "system" ? null : drag}
           onPress={() => {
             navigation.navigate("Steps", {
               index: index,
               listID: listID,
             });
           }}
+          isActive={isActive}
           // onPress={() => setShowList(!showList)}
           // activeOpacity={0.8}
         >
@@ -252,7 +281,7 @@ const TaskList = ({ task, index, listID }) => {
                       { color: task.complete ? "#969696" : "#e8e8e8" },
                     ]}
                   >
-                    {new Date(task.date.toDate()).toDateString()}
+                    {/* {task.date === 'object' ? new Date(task.date.getTime()).toDateString() : new Date(task.date.toDate()).toDateString() } */}
                   </Text>
                 </View>
               ) : null}

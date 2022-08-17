@@ -46,6 +46,7 @@ const AddModal = ({ modalVisible, setModalVisible, listID, tIndex, type }) => {
           type: "user",
           complete: false,
           completed: false,
+          date: null,
           points: 0,
           steps: [],
         });
@@ -55,6 +56,7 @@ const AddModal = ({ modalVisible, setModalVisible, listID, tIndex, type }) => {
           type: "user",
           complete: false,
           completed: false,
+          date: null,
           points: 0,
         });
       }
