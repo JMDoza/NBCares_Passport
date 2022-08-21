@@ -47,6 +47,12 @@ const TaskList = ({ task, index, listID, drag, isActive }) => {
     });
   }, []);
 
+  useEffect(() => {
+    // console.log("SYSTEEEEMMMM \n", list);
+    // console.log("FIREBASSEEEEE",lists[listID])
+    setList(lists[listID])
+  }, [lists[listID]])
+
   // This toggles the Completed Boolean of the array item then updates the TaskList
   const toggleCompleted = (item) => {
     // console.log("TOGGLED UPDATED \n")
@@ -130,7 +136,8 @@ const TaskList = ({ task, index, listID, drag, isActive }) => {
 
     // console.log(new Date().getTime())
 
-    fire.updateList(list);
+    fire.updateList(list)
+    setList(lists[listID])
   };
 
   const deleteTask = (index) => {
@@ -281,7 +288,7 @@ const TaskList = ({ task, index, listID, drag, isActive }) => {
                       { color: task.complete ? "#969696" : "#e8e8e8" },
                     ]}
                   >
-                    {/* {task.date === 'object' ? new Date(task.date.getTime()).toDateString() : new Date(task.date.toDate()).toDateString() } */}
+                    {Object.keys(task.date).length == '2' ?  new Date(task.date.toDate()).toDateString() : null }
                   </Text>
                 </View>
               ) : null}

@@ -37,9 +37,15 @@ export default TabRender = ({ listID }) => {
   // )
 
   useEffect(() => {
-    console.log("UPDATED");
+    console.log("SYSTEEEEMMMM \n", list);
     fire.updateList(list);
   }, [list]);
+
+  useEffect(() => {
+    console.log("SYSTEEEEMMMM \n", list);
+    console.log("FIREBASSEEEEE",lists[listID])
+    setList(lists[listID])
+  }, [lists[listID]])
 
   const renderItem = ({ item, index, drag, isActive }) => {
     return (
